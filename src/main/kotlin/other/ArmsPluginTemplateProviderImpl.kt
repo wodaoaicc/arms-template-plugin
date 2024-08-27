@@ -6,7 +6,7 @@ import java.io.File
 
 /**
  * Created on 2021/4/19 16:53
- * @author Love_xie
+ * @author cc
  * module name is ArmsPluginTemplateProviderImpl
  */
 class ArmsPluginTemplateProviderImpl : WizardTemplateProvider() {

@@ -12,23 +12,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import cn.skytech.iglobalwin.app.base.SimpleBaseFragment
+import com.tphy.base.activity.SQBaseFragment
+import ${provider.componentPackageName.value}.databinding.Fragment${provider.pageName.value}Binding
 import com.jess.arms.di.component.AppComponent
 import ${provider.componentPackageName.value}.Dagger${provider.pageName.value}Component
 import ${provider.moudlePackageName.value}.${provider.pageName.value}Module
 import ${provider.contractPackageName.value}.${provider.pageName.value}Contract
 import ${provider.presenterPackageName.value}.${provider.pageName.value}Presenter
 import ${provider.appPackageName.value}.R
-import kotlinx.android.synthetic.main.base_title.*
 
 ${commonAnnotation(provider)}
-class ${provider.pageName.value}Fragment : SimpleBaseFragment<${provider.pageName.value}Presenter>() , ${provider.pageName.value}Contract.View{
-    companion object {
-    fun newInstance():${provider.pageName.value}Fragment {
-        val fragment = ${provider.pageName.value}Fragment()
-        return fragment
-    }
-    }
+class ${provider.pageName.value}Fragment : SQBaseFragment<${provider.pageName.value}Presenter>() , ${provider.pageName.value}Contract.View{
     override fun setupFragmentComponent(appComponent:AppComponent) {
         Dagger${provider.pageName.value}Component //如找不到该类,请编译一下项目
                 .builder()
@@ -37,15 +31,11 @@ class ${provider.pageName.value}Fragment : SimpleBaseFragment<${provider.pageNam
                 .build()
                 .inject(this)
     }
-    override fun initView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?):View{
-        return inflater.inflate(R.layout.${provider.fragmentLayoutName.value}, container, false)
-    }
+   
     /**
      * 在 onActivityCreate()时调用
      */
     override fun initData(savedInstanceState: Bundle?) {
-        setToolBarNoBack(toolbar, "${provider.pageName.value}")
-        
         initListener()
     }
     
@@ -53,7 +43,6 @@ class ${provider.pageName.value}Fragment : SimpleBaseFragment<${provider.pageNam
     
     }
     
-    override fun getFragment(): Fragment = this
 }
     
 """
@@ -68,7 +57,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import cn.skytech.iglobalwin.app.base.SimpleBaseFragment;
+import com.tphy.base.activity.SQBaseFragment;
+import ${provider.componentPackageName.value}.databinding.Fragment${provider.pageName.value}Binding;
 import com.jess.arms.di.component.AppComponent;
 import ${provider.componentPackageName.value}.Dagger${provider.pageName.value}Component;
 import ${provider.moudlePackageName.value}.${provider.pageName.value}Module;
@@ -77,7 +67,7 @@ import ${provider.presenterPackageName.value}.${provider.pageName.value}Presente
 import ${provider.appPackageName.value}.R;
 
 ${commonAnnotation(provider)}
-class ${provider.pageName.value}Fragment extends SimpleBaseFragment<${provider.pageName.value}Presenter> implements ${provider.pageName.value}Contract.View{
+class ${provider.pageName.value}Fragment extends SQBaseFragment<${provider.pageName.value}Presenter,${provider.pageName.value}> implements ${provider.pageName.value}Contract.View{
     
     public static ${provider.pageName.value}Fragment newInstance() {
         ${provider.pageName.value}Fragment fragment = new ${provider.pageName.value}Fragment();
@@ -89,22 +79,17 @@ class ${provider.pageName.value}Fragment extends SimpleBaseFragment<${provider.p
         Dagger${provider.pageName.value}Component //如找不到该类,请编译一下项目
                 .builder()
                 .appComponent(appComponent)
-                .view(this)
+                .${provider.pageName.value[0].toLowerCase()}${provider.pageName.value.substring(1,provider.pageName.value.length)}Module(${provider.pageName.value}Module(this))
+//                .view(this)
                 .build()
                 .inject(this);
     }
     
-    @Override
-    public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        return inflater.inflate(R.layout.${provider.fragmentLayoutName.value}, container, false);
-    }
     /**
      * 在 onActivityCreate()时调用
      */
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        //setToolBarNoBack(toolbar, "${provider.pageName.value}");
-        
         initListener();
     }
     
@@ -112,9 +97,6 @@ class ${provider.pageName.value}Fragment extends SimpleBaseFragment<${provider.p
    
 	}
     
-    public Fragment getFragment(){
-        return this;
-    }
 }
     
 """
