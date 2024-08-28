@@ -73,18 +73,24 @@ import ${provider.moudlePackageName.value}.${provider.pageName.value}Module;
 ${
     if (provider.needActivity.value && provider.needFragment.value)
         """
+import dagger.BindsInstance;
 import com.jess.arms.di.scope.ActivityScope;
+import ${provider.contractPackageName.value}.${provider.pageName.value}Contract;
 import ${provider.activityPackageName.value}.${provider.pageName.value}Activity;
 import ${provider.fragmentPackageName.value}.${provider.pageName.value}Fragment;
 """
     else if (provider.needActivity.value)
         """
+import dagger.BindsInstance;
 import com.jess.arms.di.scope.ActivityScope;
+import ${provider.contractPackageName.value}.${provider.pageName.value}Contract;
 import ${provider.activityPackageName.value}.${provider.pageName.value}Activity;
 """
     else if (provider.needFragment.value)
         """
+import dagger.BindsInstance;
 import com.jess.arms.di.scope.FragmentScope;
+import ${provider.contractPackageName.value}.${provider.pageName.value}Contract;
 import ${provider.fragmentPackageName.value}.${provider.pageName.value}Fragment;
 """
     else ""
@@ -107,14 +113,44 @@ ${
         """
     void inject(${provider.pageName.value}Activity activity);
     void inject(${provider.pageName.value}Fragment fragment);
+    
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        ${provider.pageName.value}Component.Builder view(${provider.pageName.value}Contract.View view);
+
+        ${provider.pageName.value}Component.Builder appComponent(AppComponent appComponent);
+
+        ${provider.pageName.value}Component build();
+    }
     """
     } else if (provider.needActivity.value) {
         """
     void inject(${provider.pageName.value}Activity activity);
+    
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        ${provider.pageName.value}Component.Builder view(${provider.pageName.value}Contract.View view);
+
+        ${provider.pageName.value}Component.Builder appComponent(AppComponent appComponent);
+
+        ${provider.pageName.value}Component build();
+    }
     """
     } else if (provider.needFragment.value) {
         """
     void inject(${provider.pageName.value}Fragment fragment);
+    
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        ${provider.pageName.value}Component.Builder view(${provider.pageName.value}Contract.View view);
+
+        ${provider.pageName.value}Component.Builder appComponent(AppComponent appComponent);
+
+        ${provider.pageName.value}Component build();
+    }
     """
     } else ""
 }

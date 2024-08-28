@@ -10,6 +10,6 @@ fun simpleLayout(provider: ArmsPluginTemplateProviderImpl) = """
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/base_title" />
+    <!--    <include layout="@layout/base_title" />-->
 </LinearLayout>
 """

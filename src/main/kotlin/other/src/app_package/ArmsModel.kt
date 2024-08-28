@@ -7,8 +7,6 @@ fun armsModel(isKt: Boolean, provider: ArmsPluginTemplateProviderImpl) = if (isK
 
 private fun armsModelKt(provider: ArmsPluginTemplateProviderImpl) = """
 package ${provider.modelPackageName.value}
-import android.app.Application
-import com.google.gson.Gson
 import com.jess.arms.integration.IRepositoryManager
 import com.jess.arms.mvp.BaseModel
 ${
@@ -36,10 +34,6 @@ ${
 class ${provider.pageName.value}Model
 @Inject
 constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager), ${provider.pageName.value}Contract.Model{
-    @Inject
-    lateinit var mGson:Gson
-    @Inject
-    lateinit var mApplication: Application
 
     override fun onDestroy() {
           super.onDestroy()
@@ -50,8 +44,6 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
 
 fun armsModelJava(provider: ArmsPluginTemplateProviderImpl) = """
 package ${provider.modelPackageName.value};
-import android.app.Application;
-import com.google.gson.Gson;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 ${
@@ -77,21 +69,15 @@ ${
     else ""
 }
 public class ${provider.pageName.value}Model extends BaseModel implements ${provider.pageName.value}Contract.Model{
-    @Inject
-    Gson mGson;
-    @Inject
-    Application mApplication;
-
+   
     @Inject
     public ${provider.pageName.value}Model(IRepositoryManager repositoryManager) {
         super(repositoryManager);
     }
-
+    
     @Override
     public void onDestroy() {
         super.onDestroy();
-        this.mGson = null;
-        this.mApplication = null;
     }
 }   
 """
